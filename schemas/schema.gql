@@ -1,0 +1,101 @@
+type CellPhone {
+  # Cell phone country code
+  countryCode: String!
+
+  # Cell phone number
+  phoneNumber: String!
+
+  # Is cell phone verified
+  isVerified: Boolean!
+
+  # Cell phone verification date and time
+  verifiedAt: Date
+}
+
+type CreditCard {
+  # Credit card number
+  number: String!
+
+  # Credit card expiration date
+  expiresAt: String!
+}
+
+type Customer {
+  # Customer unique id
+  id: String!
+
+  # Current version of customer's data, used for concurrency handling
+  version: Int!
+
+  # Customer username
+  username: String!
+
+  # Customer first name
+  firstName: String
+
+  # Customer last name
+  lastName: String
+
+  # Customer primary email
+  primaryEmail: Email
+
+  # Customer primary cell phone
+  primaryCellPhone: CellPhone
+
+  # Customer email addresses
+  emails: [Email]
+
+  # Customer cell phones
+  cellPhones: [CellPhone]
+
+  # Customer credit cards
+  creditCards: [CreditCard]
+
+  # External login providers added
+  externalLogins: [String]
+}
+
+# The `Date` scalar type represents a timestamp provided in UTC. `Date` expects
+# timestamps to be formatted in accordance with the
+# [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+scalar Date
+
+scalar Decimal
+
+type Email {
+  # Email address
+  email: String!
+
+  # Is email address verified
+  isVerified: Boolean!
+
+  # Email address verification date and time
+  verifiedAt: Date
+}
+
+type Query {
+  # Finds customer by id
+  customer(
+    # Customer unique id
+    id: String
+  ): Customer
+
+  # Searches customers by input args
+  customers(
+    # Customer username
+    username: String
+
+    # Customer first name
+    firstName: String
+
+    # Customer last name
+    lastName: String
+
+    # Customer email address
+    email: String
+
+    # Customer cell phone
+    cellPhone: String
+  ): [Customer]
+}
+
