@@ -1,22 +1,25 @@
 {
-  "name": "apollo-graphql",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "bundle": "browserify build/index.js -o bundle/main.js",
-    "build": "tsc && npm run bundle",
-    "start": "npm run build && http-server -p 8888"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "browserify": "^14.4.0",
-    "http-server": "^0.10.0"
-  },
-  "dependencies": {
-    "@playlyfe/gql": "^2.3.2",
-    "apollo-client": "^1.9.0",
-    "graphql-tag": "^2.4.2"
-  }
+    "name": "apollo-graphql",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "bundle": "browserify build/index.js -o bundle/main.js",
+        "build": "tsc",
+        "build-bundle": "npm run build && npm run bundle",
+        "server": "http-server -p 8888"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/handlebars": "^4.0.35",
+        "browserify": "^14.4.0",
+        "http-server": "^0.10.0"
+    },
+    "dependencies": {
+        "@playlyfe/gql": "^2.3.2",
+        "apollo-client": "^1.9.0",
+        "graphql-tag": "^2.4.2",
+        "handlebars": "^4.0.10"
+    }
 }
