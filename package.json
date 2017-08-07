@@ -7,7 +7,7 @@
         "bundle": "browserify build/index.js -o bundle/main.js",
         "build": "tsc",
         "build-bundle": "npm run build && npm run bundle",
-        "server": "http-server -p 8888"
+        "server": "http-server -p 8888 --cors"
     },
     "author": "",
     "license": "ISC",

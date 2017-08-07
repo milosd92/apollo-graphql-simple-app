@@ -2,19 +2,24 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import gql from 'graphql-tag';
 import * as HandleBars from 'handlebars';
 
-interface Customer {
+interface ICustomer {
     id: string;
     username: string;
     firstName: string;
     lastName: string;
-    externalLogins: string;
+    primaryEmail: {
+        email: string;
+    };
+    primaryCellPhone: {
+        phoneNumber: string;
+    };
 }
 
 export class CustomersComponent {
     constructor() {
         this._client = new ApolloClient({
             networkInterface: createNetworkInterface({
-                uri: 'http://openlimo-test.mocosha.com/customer-query-api/graphql',
+                uri: 'http://localhost:5007/graphql',
                 opts: {
                     method: 'POST'
                 }
@@ -23,18 +28,24 @@ export class CustomersComponent {
     }
 
     getCustomers() {
-        var response = this._client.watchQuery<{ customers: Customer[] }>({
+        let response = this._client.watchQuery<{ customers: ICustomer[] }>({
             query: gql`
-                query {
+                query allCustomers {
                     customers {
                         id
                         username
                         firstName
                         lastName
-                        externalLogins
+                        primaryEmail {
+                            email
+                        }
+                        primaryCellPhone {
+                            phoneNumber
+                        }
                     }
                 }
-                `
+                `,
+                variables: {}
         });
 
         response.subscribe({
@@ -43,7 +54,7 @@ export class CustomersComponent {
         });
     }
 
-    private renderCustomers(data: { customers: Customer[] }) {
+    private renderCustomers(data: { customers: ICustomer[] }) {
         let source = document.getElementById("some-template").innerHTML;
         let template = HandleBars.compile(source);
 
