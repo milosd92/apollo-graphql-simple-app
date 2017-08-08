@@ -58,7 +58,6 @@ export class CustomersComponent {
     }
 
     searchCustomersByUsername(username: string) {
-        console.log(username);
         let response = this._client.watchQuery<{ customers: ICustomer[] }>({
             query: gql`
                 query searchCustomersByUsername($username: String) {
