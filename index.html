@@ -48,8 +48,13 @@
                                 </button>
                             </td>
                             <td>{{primaryCellPhone.phoneNumber}}</td>
-                            <td><button type="button"
-                                        class="btn btn-default">Default</button></td>
+                            <td>
+                                <button type="button"
+                                        class="btn btn-default"
+                                        onclick="cellPhoneComponent.getOtherCellPhonesForCustomer('{{id}}')">
+                                    <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                                </button>
+                            </td>
                         </tr>
                         {{/customers}}
                     </tbody>
@@ -80,7 +85,50 @@
                             <ol>
                                 {{#customer.emails}}
                                 <li>
-                                    <span>{{email}}</span>
+                                    <span>{{email}}</span> {{#if isVerified}}
+                                    <span class="glyphicon glyphicon-ok text-primary"
+                                          style="cursor: pointer"
+                                          data-toggle="tooltip-right"
+                                          title="Verified at {{verifiedAt}}!"
+                                          aria-hidden="true"></span> {{/if}}
+                                </li>
+                                {{/customer.emails}}
+                            </ol>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button"
+                                    class="btn btn-default"
+                                    data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
+    </div>
+    <div id="customer-cellphones-modal-container">
+        <script id="customer-cellphones-modal-template"
+                type="text/x-handlebars-template">
+            <div class="modal fade"
+                 id="customer-cellphones-modal"
+                 tabindex="-1"
+                 role="dialog"
+                 aria-labelledby="myModalLabel">
+                <div class="modal-dialog"
+                     role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button"
+                                    class="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title"
+                                id="myModalLabel">Other CellPhones for {{customer.firstName}} {{customer.lastName}}</h4>
+                        </div>
+                        <div class="modal-body">
+                             <ol>
+                                {{#customer.cellPhones}}
+                                <li>
+                                    <span>({{countryCode}}) {{phoneNumber}}</span>
                                     {{#if isVerified}}
                                     <span class="glyphicon glyphicon-ok text-primary"
                                           style="cursor: pointer"
@@ -89,8 +137,8 @@
                                           aria-hidden="true"></span>
                                     {{/if}}
                                 </li>
-                                {{/customer.emails}}
-                            </ol>
+                                {{/customer.cellPhones}}
+                            </ol> 
                         </div>
                         <div class="modal-footer">
                             <button type="button"
