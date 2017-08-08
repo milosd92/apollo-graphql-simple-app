@@ -25,6 +25,9 @@ export class CustomersComponent {
                 }
             }),
         });
+
+        let source = document.getElementById("customers-table-template").innerHTML;
+        this._template = HandleBars.compile(source);
     }
 
     getCustomers() {
@@ -54,12 +57,40 @@ export class CustomersComponent {
         });
     }
 
-    private renderCustomers(data: { customers: ICustomer[] }) {
-        let source = document.getElementById("some-template").innerHTML;
-        let template = HandleBars.compile(source);
+    searchCustomersByUsername(username: string) {
+        console.log(username);
+        let response = this._client.watchQuery<{ customers: ICustomer[] }>({
+            query: gql`
+                query searchCustomersByUsername($username: String) {
+                    customers(username: $username) {
+                        id
+                        username
+                        firstName
+                        lastName
+                        primaryEmail {
+                            email
+                        }
+                        primaryCellPhone {
+                            phoneNumber
+                        }
+                    }
+                }
+                `,
+                variables: {
+                    username: username
+                }
+        });
 
-        document.getElementById("customers-table-container").innerHTML = template(data);
+        response.subscribe({
+            next: res => this.renderCustomers(res.data),
+            error: err => console.error(err)
+        });
+    }
+
+    private renderCustomers(data: { customers: ICustomer[] }) {
+        document.getElementById("customers-table-container").innerHTML = this._template(data);
     }
 
     private _client: ApolloClient = null;
+    private _template;
 }

@@ -7,5 +7,6 @@ customersComponent.getCustomers();
 
 let test = <any>window;
 
+test.customersComponent = customersComponent;
 test.emailComponent = new EmailComponent();
 test.cellPhoneComponent = new CellPhoneComponent();
